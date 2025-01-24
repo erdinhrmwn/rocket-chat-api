@@ -1,0 +1,11 @@
+/vendor
+/.fleet
+/.idea
+/.vscode
+/.zed
+/.blueprint
+/draft.yaml
+.DS_Store
+.env
+.env.backup
+.env.production

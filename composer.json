@@ -1,0 +1,28 @@
+{
+	"version": "1.0.0",
+	"name": "erdinhrmwn/rocket-chat-api",
+	"description": "Rocket Chat REST API client for Laravel.",
+	"license": "MIT",
+	"type": "library",
+	"autoload": {
+		"psr-4": {
+			"ErdinHrmwn\\RocketChat\\": "src/"
+		}
+	},
+	"authors": [
+		{
+			"name": "Erdin Hermawan",
+			"email": "erdinhrmwn@gmail.com"
+		}
+	],
+	"require": {
+		"php": "^8.0",
+		"illuminate/support": "^10|^11",
+		"illuminate/http": "^10|^11"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"require-dev": {
+		"laravel/pint": "^1.20"
+	}
+}
