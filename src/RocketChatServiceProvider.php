@@ -14,7 +14,7 @@ class RocketChatServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/rocketchat.php', 'rocketchat'
+            __DIR__ . '/config/rocketchat.php', 'rocketchat'
         );
 
         $this->app->bind('rocket-chat-api', Http\RocketChatService::class);
@@ -28,7 +28,7 @@ class RocketChatServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../config/rocketchat.php' => config_path('rocketchat.php'),
+            __DIR__ . '/config/rocketchat.php' => config_path('rocketchat.php'),
         ], 'config');
     }
 }
