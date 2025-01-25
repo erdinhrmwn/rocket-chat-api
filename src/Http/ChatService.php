@@ -7,8 +7,8 @@ class ChatService extends ApiService
     public function sendMessage(string $roomId, string $text, array $attachments = []): array
     {
         $payload = [
-            'rid'         => $roomId,
-            'msg'         => $text,
+            'rid' => $roomId,
+            'msg' => $text,
             'attachments' => $attachments,
         ];
 
@@ -20,9 +20,9 @@ class ChatService extends ApiService
     public function updateMessage(string $messageId, string $roomId, string $text): array
     {
         $payload = [
-            'msgId'  => $messageId,
+            'msgId' => $messageId,
             'roomId' => $roomId,
-            'text'   => $text,
+            'text' => $text,
         ];
 
         $response = $this->postRequest('/api/v1/chat.update', $payload);
@@ -33,7 +33,7 @@ class ChatService extends ApiService
     public function deleteMessage(string $messageId, string $roomId): array
     {
         $payload = [
-            'msgId'  => $messageId,
+            'msgId' => $messageId,
             'roomId' => $roomId,
             'asUser' => false,
         ];
@@ -60,8 +60,8 @@ class ChatService extends ApiService
     public function reactToMessage(string $messageId, string $emoji): bool
     {
         $response = $this->postRequest('/api/v1/chat.react', [
-            'messageId'   => $messageId,
-            'emoji'       => $emoji,
+            'messageId' => $messageId,
+            'emoji' => $emoji,
             'shouldReact' => true,
         ]);
 
@@ -71,7 +71,7 @@ class ChatService extends ApiService
     public function searchMessages(string $roomId, string $text): array
     {
         $response = $this->postRequest('/api/v1/chat.search', [
-            'roomId'     => $roomId,
+            'roomId' => $roomId,
             'searchText' => $text,
         ]);
 

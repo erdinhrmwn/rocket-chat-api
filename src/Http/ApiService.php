@@ -16,9 +16,9 @@ abstract class ApiService
 
     public function __construct(PendingRequest $client, string $authToken, string $userId)
     {
-        $this->client    = $client;
+        $this->client = $client;
         $this->authToken = $authToken;
-        $this->userId    = $userId;
+        $this->userId = $userId;
     }
 
     protected function getRequest(string $endpoint, array $query = []): array
@@ -59,7 +59,7 @@ abstract class ApiService
     {
         return [
             'X-Auth-Token' => $this->authToken,
-            'X-User-Id'    => $this->userId,
+            'X-User-Id' => $this->userId,
         ];
     }
 }

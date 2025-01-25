@@ -2,23 +2,35 @@
 
 namespace ErdinHrmwn\RocketChat\Http;
 
+use ErdinHrmwn\RocketChat\Entities\User;
+
 class UserService extends ApiService
 {
+    /**
+     * @return array<int, User>
+     */
     public function all(): array
     {
         $response = $this->getRequest('/api/v1/users.list', ['count' => 0]);
 
-        return $response['users'];
+        return array_map(fn (array $user): User => User::fromArray($user), $response['users']);
     }
 
-    public function getList($params = []): array
+    /**
+     * @param  array<string, mixed>  $params
+     * @return array<int, User>
+     */
+    public function getList(array $params = []): array
     {
         $response = $this->getRequest('/api/v1/users.list', $params);
 
-        return $response['users'];
+        return array_map(fn (array $user): User => User::fromArray($user), $response['users']);
     }
 
-    public function getInfo(string $userId, string $paramType = 'userId'): array
+    /**
+     * @throws \Exception
+     */
+    public function getInfo(string $userId, string $paramType = 'userId'): User
     {
         if (!in_array($paramType, ['userId', 'username'])) {
             throw new \Exception('Bad method parameter value.');
@@ -30,26 +42,32 @@ class UserService extends ApiService
 
         $response = $this->getRequest('/api/v1/users.info', [$paramType => $userId]);
 
-        return $response['user'];
+        return User::fromArray($response['user']);
     }
 
-    public function create(array $userData): array
+    /**
+     * @param  array<string, mixed>  $userData
+     */
+    public function create(array $userData): User
     {
         $response = $this->postRequest('/api/v1/users.create', $userData);
 
-        return $response['user'];
+        return User::fromArray($response['user']);
     }
 
-    public function update(string $userId, array $userData): array
+    /**
+     * @param  array<string, mixed>  $userData
+     */
+    public function update(string $userId, array $userData): User
     {
         $payload = [
             'userId' => $userId,
-            'data'   => $userData,
+            'data' => $userData,
         ];
 
         $response = $this->postRequest('/api/v1/users.update', $payload);
 
-        return $response['user'];
+        return User::fromArray($response['user']);
     }
 
     public function delete(string $userId): bool
@@ -59,6 +77,11 @@ class UserService extends ApiService
         return (bool) $response['success'];
     }
 
+    /**
+     * @return array<string, mixed>
+     *
+     * @throws \Exception
+     */
     public function createToken(string $userId, string $paramType = 'userId'): array
     {
         if (!in_array($paramType, ['userId', 'username'])) {

@@ -24,7 +24,7 @@ class RocketChatService
             ->throw();
 
         $this->authToken = Session::get('rocketchat_auth_token');
-        $this->userId    = Session::get('rocketchat_user_id');
+        $this->userId = Session::get('rocketchat_user_id');
 
         if (!$this->authToken || !$this->userId) {
             $this->authenticate(config('rocketchat.admin_username'), config('rocketchat.admin_password'));
@@ -35,7 +35,7 @@ class RocketChatService
     {
         try {
             $response = $this->client->post('/api/v1/login', [
-                'user'     => $username,
+                'user' => $username,
                 'password' => $password,
             ]);
 
@@ -46,7 +46,7 @@ class RocketChatService
             }
 
             $this->authToken = $body['data']['authToken'];
-            $this->userId    = $body['data']['userId'];
+            $this->userId = $body['data']['userId'];
 
             Session::put('rocketchat_auth_token', $this->authToken);
             Session::put('rocketchat_user_id', $this->userId);
@@ -61,7 +61,7 @@ class RocketChatService
             $response = $this->client
                 ->withHeaders([
                     'X-Auth-Token' => $this->authToken,
-                    'X-User-Id'    => $this->userId,
+                    'X-User-Id' => $this->userId,
                 ])
                 ->get('/api/v1/info');
 

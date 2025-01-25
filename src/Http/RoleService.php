@@ -2,36 +2,52 @@
 
 namespace ErdinHrmwn\RocketChat\Http;
 
+use ErdinHrmwn\RocketChat\Entities\Role;
+use ErdinHrmwn\RocketChat\Entities\User;
+
 class RoleService extends ApiService
 {
+    /**
+     * @return array<Role>
+     */
     public function list(): array
     {
         $response = $this->getRequest('/api/v1/roles.list');
 
-        return $response['roles'];
+        return array_map(fn (array $role): Role => Role::fromArray($role), $response['roles']);
     }
 
-    public function create(string $name, string $description, ?string $scope = 'Users'): array
+    /**
+     * @return array<User>
+     */
+    public function getUsers(string $id): array
+    {
+        $response = $this->getRequest('/api/v1/roles.getUsersInRole', ['roleId' => $id]);
+
+        return array_map(fn (array $user): User => User::fromArray($user), $response['users']);
+    }
+
+    public function create(string $name, string $description, ?string $scope = 'Users'): Role
     {
         $response = $this->postRequest('/api/v1/roles.create', [
-            'name'        => $name,
-            'scope'       => $scope,
+            'name' => $name,
+            'scope' => $scope,
             'description' => $description,
         ]);
 
-        return $response['role'];
+        return Role::fromArray($response['role']);
     }
 
-    public function update(string $id, string $name, string $description, ?string $scope = 'Users'): array
+    public function update(string $id, string $name, string $description, ?string $scope = 'Users'): Role
     {
         $response = $this->postRequest('/api/v1/roles.update', [
-            'roleId'      => $id,
-            'name'        => $name,
-            'scope'       => $scope,
+            'roleId' => $id,
+            'name' => $name,
+            'scope' => $scope,
             'description' => $description,
         ]);
 
-        return $response['role'];
+        return Role::fromArray($response['role']);
     }
 
     public function delete(string $id): bool
@@ -41,20 +57,20 @@ class RoleService extends ApiService
         return (bool) $response['success'];
     }
 
-    public function assignRole(string $role, string $userId): array
+    public function assignRole(string $role, string $userId): Role
     {
         $response = $this->postRequest('/api/v1/roles.addUserToRole', [
             'roleName' => $role,
             'username' => $userId,
         ]);
 
-        return $response['role'];
+        return Role::fromArray($response['role']);
     }
 
     public function revokeRole(string $id, string $userId): bool
     {
         $response = $this->postRequest('/api/v1/roles.removeUserFromRole', [
-            'roleId'   => $id,
+            'roleId' => $id,
             'username' => $userId,
         ]);
 
