@@ -1,5 +1,5 @@
 {
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"name": "erdinhrmwn/rocket-chat-api",
 	"description": "Rocket Chat REST API client for Laravel.",
 	"license": "MIT",
@@ -23,6 +23,7 @@
 	"minimum-stability": "dev",
 	"prefer-stable": true,
 	"require-dev": {
-		"laravel/pint": "^1.20"
+		"laravel/pint": "^1.20",
+		"phpunit/phpunit": "^11.5"
 	}
 }

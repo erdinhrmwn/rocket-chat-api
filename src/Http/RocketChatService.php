@@ -17,17 +17,34 @@ class RocketChatService
 
     public function __construct()
     {
+        $this->authToken = Session::get('rocketchat_auth_token');
+        $this->userId = Session::get('rocketchat_user_id');
+
+        $baseUrl = config('rocketchat.instance');
+
+        if (!$baseUrl) {
+            throw new \Exception('RocketChat instance URL not set.');
+        }
+
         $this->client = Http::createPendingRequest()
-            ->baseUrl(config('rocketchat.instance'))
+            ->baseUrl($baseUrl)
+            ->withHeaders([
+                'X-Auth-Token' => $this->authToken,
+                'X-User-Id' => $this->userId,
+            ])
             ->acceptJson()
             ->asJson()
             ->throw();
 
-        $this->authToken = Session::get('rocketchat_auth_token');
-        $this->userId    = Session::get('rocketchat_user_id');
-
         if (!$this->authToken || !$this->userId) {
-            $this->authenticate(config('rocketchat.admin_username'), config('rocketchat.admin_password'));
+            $username = config('rocketchat.admin_username');
+            $password = config('rocketchat.admin_password');
+
+            if (!$username || !$password) {
+                throw new \Exception('RocketChat admin username or password not set.');
+            }
+
+            $this->authenticate($username, $password);
         }
     }
 
@@ -35,7 +52,7 @@ class RocketChatService
     {
         try {
             $response = $this->client->post('/api/v1/login', [
-                'user'     => $username,
+                'user' => $username,
                 'password' => $password,
             ]);
 
@@ -46,7 +63,12 @@ class RocketChatService
             }
 
             $this->authToken = $body['data']['authToken'];
-            $this->userId    = $body['data']['userId'];
+            $this->userId = $body['data']['userId'];
+
+            $this->client->replaceHeaders([
+                'X-Auth-Token' => $this->authToken,
+                'X-User-Id' => $this->userId,
+            ]);
 
             Session::put('rocketchat_auth_token', $this->authToken);
             Session::put('rocketchat_user_id', $this->userId);
@@ -58,12 +80,7 @@ class RocketChatService
     public function getServerInfo(): array
     {
         try {
-            $response = $this->client
-                ->withHeaders([
-                    'X-Auth-Token' => $this->authToken,
-                    'X-User-Id'    => $this->userId,
-                ])
-                ->get('/api/v1/info');
+            $response = $this->client->get('/api/v1/info');
 
             return $response->json();
         } catch (RequestException $th) {
@@ -73,31 +90,31 @@ class RocketChatService
 
     public function users()
     {
-        return new UserService($this->client, $this->authToken, $this->userId);
+        return new UserService($this->client);
     }
 
     public function roles()
     {
-        return new RoleService($this->client, $this->authToken, $this->userId);
+        return new RoleService($this->client);
     }
 
     public function permissions()
     {
-        return new PermissionService($this->client, $this->authToken, $this->userId);
+        return new PermissionService($this->client);
     }
 
     public function groups()
     {
-        return new GroupService($this->client, $this->authToken, $this->userId);
+        return new GroupService($this->client);
     }
 
     public function channels()
     {
-        return new ChannelService($this->client, $this->authToken, $this->userId);
+        return new ChannelService($this->client);
     }
 
     public function chats()
     {
-        return new ChatService($this->client, $this->authToken, $this->userId);
+        return new ChatService($this->client);
     }
 }

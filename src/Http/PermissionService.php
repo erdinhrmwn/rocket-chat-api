@@ -16,7 +16,7 @@ class PermissionService extends ApiService
         $response = $this->postRequest('/api/v1/permissions.update', [
             'permissions' => [
                 [
-                    '_id'   => $permission,
+                    '_id' => $permission,
                     'roles' => $roles,
                 ],
             ],

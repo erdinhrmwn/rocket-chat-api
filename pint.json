@@ -31,7 +31,7 @@
             "statements": ["for", "foreach", "if", "switch", "try", "while"]
         },
         "binary_operator_spaces": {
-            "default": "align_single_space_minimal",
+            "default": "single_space",
             "operators": {
                 "??": "single_space"
             }

@@ -9,8 +9,8 @@ class ChannelService extends ApiService
         $endpoint = '/api/v1/channels.create';
 
         $payload = [
-            'name'     => $name,
-            'members'  => $members,
+            'name' => $name,
+            'members' => $members,
             'readOnly' => false,
         ];
 

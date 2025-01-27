@@ -44,7 +44,7 @@ class UserService extends ApiService
     {
         $payload = [
             'userId' => $userId,
-            'data'   => $userData,
+            'data' => $userData,
         ];
 
         $response = $this->postRequest('/api/v1/users.update', $payload);

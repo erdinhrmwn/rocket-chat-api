@@ -14,8 +14,8 @@ class RoleService extends ApiService
     public function create(string $name, string $description, ?string $scope = 'Users'): array
     {
         $response = $this->postRequest('/api/v1/roles.create', [
-            'name'        => $name,
-            'scope'       => $scope,
+            'name' => $name,
+            'scope' => $scope,
             'description' => $description,
         ]);
 
@@ -25,9 +25,9 @@ class RoleService extends ApiService
     public function update(string $id, string $name, string $description, ?string $scope = 'Users'): array
     {
         $response = $this->postRequest('/api/v1/roles.update', [
-            'roleId'      => $id,
-            'name'        => $name,
-            'scope'       => $scope,
+            'roleId' => $id,
+            'name' => $name,
+            'scope' => $scope,
             'description' => $description,
         ]);
 
@@ -54,7 +54,7 @@ class RoleService extends ApiService
     public function revokeRole(string $id, string $userId): bool
     {
         $response = $this->postRequest('/api/v1/roles.removeUserFromRole', [
-            'roleId'   => $id,
+            'roleId' => $id,
             'username' => $userId,
         ]);
 

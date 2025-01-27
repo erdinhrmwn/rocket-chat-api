@@ -9,8 +9,8 @@ class GroupService extends ApiService
         $endpoint = '/api/v1/groups.create';
 
         $payload = [
-            'name'     => $name,
-            'members'  => $members,
+            'name' => $name,
+            'members' => $members,
             'readOnly' => false,
         ];
 
