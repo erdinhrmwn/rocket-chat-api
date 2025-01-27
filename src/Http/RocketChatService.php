@@ -77,6 +77,17 @@ class RocketChatService
         }
     }
 
+    public function me(): array
+    {
+        try {
+            $response = $this->client->get('/api/v1/me');
+
+            return $response->json();
+        } catch (RequestException $th) {
+            throw new \Exception('Error fetching user info: ' . $th->response->body());
+        }
+    }
+
     public function getServerInfo(): array
     {
         try {
