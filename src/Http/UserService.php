@@ -59,17 +59,17 @@ class UserService extends ApiService
         return (bool) $response['success'];
     }
 
-    public function createToken(string $userId, string $paramType = 'userId'): array
+    public function createToken(string $user, string $paramType = 'userId'): array
     {
         if (!in_array($paramType, ['userId', 'username'])) {
             throw new \Exception('Bad method parameter value.');
         }
 
-        if (!$userId) {
+        if (!$user) {
             throw new \Exception('User ID not specified.');
         }
 
-        $response = $this->postRequest('/api/v1/users.createToken', [$paramType => $userId]);
+        $response = $this->postRequest('/api/v1/users.createToken', [$paramType => $user]);
 
         return $response;
     }
@@ -81,7 +81,7 @@ class UserService extends ApiService
         return $response['room'];
     }
 
-    public function disableDM(string $userId): bool
+    public function closeDM(string $userId): bool
     {
         $response = $this->postRequest('/api/v1/im.close', ['roomId' => $userId]);
 

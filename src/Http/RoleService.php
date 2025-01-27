@@ -11,7 +11,7 @@ class RoleService extends ApiService
         return $response['roles'];
     }
 
-    public function create(string $name, string $description, ?string $scope = 'Users'): array
+    public function create(string $name, string $description = '', ?string $scope = 'Users'): array
     {
         $response = $this->postRequest('/api/v1/roles.create', [
             'name' => $name,
@@ -22,7 +22,7 @@ class RoleService extends ApiService
         return $response['role'];
     }
 
-    public function update(string $id, string $name, string $description, ?string $scope = 'Users'): array
+    public function update(string $id, string $name, string $description = '', ?string $scope = 'Users'): array
     {
         $response = $this->postRequest('/api/v1/roles.update', [
             'roleId' => $id,
@@ -41,21 +41,21 @@ class RoleService extends ApiService
         return (bool) $response['success'];
     }
 
-    public function assignRole(string $role, string $userId): array
+    public function assignRole(string $role, string $user, string $paramType = 'userId'): array
     {
         $response = $this->postRequest('/api/v1/roles.addUserToRole', [
             'roleName' => $role,
-            'username' => $userId,
+            $paramType => $user,
         ]);
 
         return $response['role'];
     }
 
-    public function revokeRole(string $id, string $userId): bool
+    public function revokeRole(string $id, string $user, string $paramType = 'userId'): bool
     {
         $response = $this->postRequest('/api/v1/roles.removeUserFromRole', [
             'roleId' => $id,
-            'username' => $userId,
+            $paramType => $user,
         ]);
 
         return (bool) $response['success'];
