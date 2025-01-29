@@ -41,21 +41,21 @@ class RoleService extends ApiService
         return (bool) $response['success'];
     }
 
-    public function assignRole(string $id, string $user, string $paramType = 'userId'): array
+    public function assignRole(string $id, string $username): array
     {
         $response = $this->postRequest('/api/v1/roles.addUserToRole', [
             'roleId' => $id,
-            $paramType => $user,
+            'username' => $username,
         ]);
 
         return $response['role'];
     }
 
-    public function revokeRole(string $id, string $user, string $paramType = 'userId'): bool
+    public function revokeRole(string $id, string $username): bool
     {
         $response = $this->postRequest('/api/v1/roles.removeUserFromRole', [
             'roleId' => $id,
-            $paramType => $user,
+            'username' => $username,
         ]);
 
         return (bool) $response['success'];
