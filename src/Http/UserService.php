@@ -6,7 +6,7 @@ class UserService extends ApiService
 {
     public function all(): array
     {
-        $response = $this->getRequest('/api/v1/users.list', ['count' => 0]);
+        $response = $this->getRequest('/api/v1/users.list', ['count' => 999999]);
 
         return $response['users'];
     }
