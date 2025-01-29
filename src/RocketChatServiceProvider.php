@@ -28,7 +28,7 @@ class RocketChatServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/config/rocketchat.php' => config_path('rocketchat.php'),
+            __DIR__ . '/config/rocketchat.php' => $this->app->configPath('rocketchat.php'),
         ], 'config');
     }
 }
