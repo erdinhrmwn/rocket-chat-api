@@ -17,7 +17,7 @@ class RocketChatServiceProvider extends ServiceProvider
             __DIR__ . '/config/rocketchat.php', 'rocketchat'
         );
 
-        $this->app->bind('rocket-chat', Http\RocketChatService::class);
+        $this->app->bind('rocket-chat-api', Http\RocketChatService::class);
     }
 
     /**

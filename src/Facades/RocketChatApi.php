@@ -4,10 +4,10 @@ namespace ErdinHrmwn\RocketChat\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class RocketChat extends Facade
+class RocketChatApi extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'rocket-chat';
+        return 'rocket-chat-api';
     }
 }
