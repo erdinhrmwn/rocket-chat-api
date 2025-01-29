@@ -51,10 +51,10 @@ class RoleService extends ApiService
         return $response['role'];
     }
 
-    public function revokeRole(string $id, string $username): bool
+    public function revokeRole(string $name, string $username): bool
     {
         $response = $this->postRequest('/api/v1/roles.removeUserFromRole', [
-            'roleId' => $id,
+            'roleName' => $name,
             'username' => $username,
         ]);
 
