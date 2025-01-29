@@ -41,10 +41,10 @@ class RoleService extends ApiService
         return (bool) $response['success'];
     }
 
-    public function assignRole(string $id, string $username): array
+    public function assignRole(string $name, string $username): array
     {
         $response = $this->postRequest('/api/v1/roles.addUserToRole', [
-            'roleId' => $id,
+            'roleName' => $name,
             'username' => $username,
         ]);
 
