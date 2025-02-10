@@ -4,111 +4,105 @@ namespace ErdinHrmwn\RocketChat\Http;
 
 class GroupService extends ApiService
 {
-    public function create(string $name, array $members = [], string $description = ''): array
+    public function create(string $name, array $members = [], ?string $description = null): array
     {
-        $endpoint = '/api/v1/groups.create';
-
-        $payload = [
+        $response = $this->postRequest('/api/v1/groups.create', [
             'name' => $name,
             'members' => $members,
             'readOnly' => false,
-        ];
-
-        if (!empty($description)) {
-            $payload['description'] = $description;
-        }
-
-        $response = $this->postRequest($endpoint, $payload);
+            'description' => $description,
+        ]);
 
         return $response['group'];
     }
 
     public function list(array $options = []): array
     {
-        $endpoint = '/api/v1/groups.list';
-
-        $response = $this->getRequest($endpoint, $options);
+        $response = $this->getRequest('/api/v1/groups.list', $options);
 
         return $response['groups'];
     }
 
     public function members(string $roomId): array
     {
-        $endpoint = '/api/v1/groups.members';
-
-        $response = $this->getRequest($endpoint, ['roomId' => $roomId]);
+        $response = $this->getRequest('/api/v1/groups.members', [
+            'roomId' => $roomId,
+        ]);
 
         return $response['members'];
     }
 
     public function getInfo(string $roomId): array
     {
-        $endpoint = '/api/v1/groups.info';
-
-        $response = $this->getRequest($endpoint, ['roomId' => $roomId]);
+        $response = $this->getRequest('/api/v1/groups.info', [
+            'roomId' => $roomId,
+        ]);
 
         return $response['group'];
     }
 
     public function archive(string $roomId): bool
     {
-        $endpoint = '/api/v1/groups.archive';
-
-        $response = $this->postRequest($endpoint, ['roomId' => $roomId]);
+        $response = $this->postRequest('/api/v1/groups.archive', [
+            'roomId' => $roomId,
+        ]);
 
         return (bool) $response['success'];
     }
 
     public function unarchive(string $roomId): bool
     {
-        $endpoint = '/api/v1/groups.unarchive';
-
-        $response = $this->postRequest($endpoint, ['roomId' => $roomId]);
+        $response = $this->postRequest('/api/v1/groups.unarchive', [
+            'roomId' => $roomId,
+        ]);
 
         return (bool) $response['success'];
     }
 
     public function delete(string $roomId): bool
     {
-        $endpoint = '/api/v1/groups.delete';
-
-        $response = $this->postRequest($endpoint, ['roomId' => $roomId]);
+        $response = $this->postRequest('/api/v1/groups.delete', [
+            'roomId' => $roomId,
+        ]);
 
         return (bool) $response['success'];
     }
 
     public function invite(string $roomId, string $userId): array
     {
-        $endpoint = '/api/v1/groups.invite';
-
-        $response = $this->postRequest($endpoint, ['roomId' => $roomId, 'userId' => $userId]);
+        $response = $this->postRequest('/api/v1/groups.invite', [
+            'roomId' => $roomId,
+            'userId' => $userId,
+        ]);
 
         return $response['group'];
     }
 
     public function kick(string $roomId, string $userId): array
     {
-        $endpoint = '/api/v1/groups.kick';
-
-        $response = $this->postRequest($endpoint, ['roomId' => $roomId, 'userId' => $userId]);
+        $response = $this->postRequest('/api/v1/groups.kick', [
+            'roomId' => $roomId,
+            'userId' => $userId,
+        ]);
 
         return $response['group'];
     }
 
     public function leave(string $roomId): array
     {
-        $endpoint = '/api/v1/groups.leave';
-
-        $response = $this->postRequest($endpoint, ['roomId' => $roomId]);
+        $response = $this->postRequest('/api/v1/groups.leave', [
+            'roomId' => $roomId,
+        ]);
 
         return $response['group'];
     }
 
     public function rename(string $roomId, string $name): array
     {
-        $endpoint = '/api/v1/groups.rename';
-
-        $response = $this->postRequest($endpoint, ['roomId' => $roomId, 'name' => $name]);
+        $response = $this->postRequest('/api/v1/groups.rename', [
+            'roomId' => $roomId,
+            'name' => $name,
+        ]);
 
         return $response['group'];
     }

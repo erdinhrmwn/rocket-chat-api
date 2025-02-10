@@ -6,53 +6,51 @@ class ChatService extends ApiService
 {
     public function sendMessage(string $roomId, string $text, array $attachments = []): array
     {
-        $payload = [
+        $response = $this->postRequest('/api/v1/chat.postMessage', [
             'rid' => $roomId,
             'msg' => $text,
             'attachments' => $attachments,
-        ];
-
-        $response = $this->postRequest('/api/v1/chat.postMessage', $payload);
+        ]);
 
         return $response['message'];
     }
 
     public function updateMessage(string $messageId, string $roomId, string $text): array
     {
-        $payload = [
+        $response = $this->postRequest('/api/v1/chat.update', [
             'msgId' => $messageId,
             'roomId' => $roomId,
             'text' => $text,
-        ];
-
-        $response = $this->postRequest('/api/v1/chat.update', $payload);
+        ]);
 
         return $response['message'];
     }
 
     public function deleteMessage(string $messageId, string $roomId): array
     {
-        $payload = [
+        $response = $this->postRequest('/api/v1/chat.delete', [
             'msgId' => $messageId,
             'roomId' => $roomId,
             'asUser' => false,
-        ];
-
-        $response = $this->postRequest('/api/v1/chat.delete', $payload);
+        ]);
 
         return $response['message'];
     }
 
     public function pinMessage(string $messageId): array
     {
-        $response = $this->postRequest('/api/v1/chat.pinMessage', ['messageId' => $messageId]);
+        $response = $this->postRequest('/api/v1/chat.pinMessage', [
+            'messageId' => $messageId,
+        ]);
 
         return $response['message'];
     }
 
     public function unpinMessage(string $messageId): bool
     {
-        $response = $this->postRequest('/api/v1/chat.unpinMessage', ['messageId' => $messageId]);
+        $response = $this->postRequest('/api/v1/chat.unpinMessage', [
+            'messageId' => $messageId,
+        ]);
 
         return (bool) $response['success'];
     }
@@ -68,11 +66,11 @@ class ChatService extends ApiService
         return (bool) $response['success'];
     }
 
-    public function searchMessages(string $roomId, string $text): array
+    public function searchMessages(string $roomId, string $searchText): array
     {
         $response = $this->postRequest('/api/v1/chat.search', [
             'roomId' => $roomId,
-            'searchText' => $text,
+            'searchText' => $searchText,
         ]);
 
         return $response['messages'];
@@ -80,7 +78,9 @@ class ChatService extends ApiService
 
     public function getPinnedMessages(string $roomId): array
     {
-        $response = $this->getRequest('/api/v1/chat.getPinnedMessages', ['roomId' => $roomId]);
+        $response = $this->getRequest('/api/v1/chat.getPinnedMessages', [
+            'roomId' => $roomId,
+        ]);
 
         return $response['messages'];
     }
