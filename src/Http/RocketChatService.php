@@ -41,7 +41,7 @@ class RocketChatService
             $password = config('rocketchat.admin_password');
 
             if (!$username || !$password) {
-                throw new \Exception('RocketChat admin username or password not set.');
+                throw new \Exception('RocketChat admin username or admin password not set.');
             }
 
             $this->authenticate($username, $password);
@@ -127,5 +127,10 @@ class RocketChatService
     public function chats()
     {
         return new ChatService($this->client);
+    }
+
+    public function rooms()
+    {
+        return new RoomService($this->client);
     }
 }

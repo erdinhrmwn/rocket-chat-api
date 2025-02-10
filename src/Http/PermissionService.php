@@ -11,12 +11,12 @@ class PermissionService extends ApiService
         return $response['update'];
     }
 
-    public function updatePermission(string $permission, array $roles): array
+    public function updatePermission(string $permissionId, array $roles): array
     {
         $response = $this->postRequest('/api/v1/permissions.update', [
             'permissions' => [
                 [
-                    '_id' => $permission,
+                    '_id' => $permissionId,
                     'roles' => $roles,
                 ],
             ],

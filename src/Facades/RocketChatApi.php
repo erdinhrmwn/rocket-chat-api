@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static RocketChatService groups()
  * @method static RocketChatService channels()
  * @method static RocketChatService chats()
+ * @method static RocketChatService rooms()
  * @method static array getServerInfo()
  * @method static array me()
  *

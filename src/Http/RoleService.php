@@ -11,7 +11,7 @@ class RoleService extends ApiService
         return $response['roles'];
     }
 
-    public function create(string $name, string $description = '', ?string $scope = 'Users'): array
+    public function create(string $name, ?string $description = null, ?string $scope = 'Users'): array
     {
         $response = $this->postRequest('/api/v1/roles.create', [
             'name' => $name,
@@ -22,10 +22,10 @@ class RoleService extends ApiService
         return $response['role'];
     }
 
-    public function update(string $id, string $name, string $description = '', ?string $scope = 'Users'): array
+    public function update(string $roleId, string $name, ?string $description = null, ?string $scope = 'Users'): array
     {
         $response = $this->postRequest('/api/v1/roles.update', [
-            'roleId' => $id,
+            'roleId' => $roleId,
             'name' => $name,
             'scope' => $scope,
             'description' => $description,
@@ -34,27 +34,29 @@ class RoleService extends ApiService
         return $response['role'];
     }
 
-    public function delete(string $id): bool
+    public function delete(string $roleId): bool
     {
-        $response = $this->postRequest('/api/v1/roles.delete', ['roleId' => $id]);
+        $response = $this->postRequest('/api/v1/roles.delete', [
+            'roleId' => $roleId,
+        ]);
 
         return (bool) $response['success'];
     }
 
-    public function assignRole(string $name, string $username): array
+    public function assignRole(string $roleName, string $username): array
     {
         $response = $this->postRequest('/api/v1/roles.addUserToRole', [
-            'roleName' => $name,
+            'roleName' => $roleName,
             'username' => $username,
         ]);
 
         return $response['role'];
     }
 
-    public function revokeRole(string $name, string $username): bool
+    public function revokeRole(string $roleName, string $username): bool
     {
         $response = $this->postRequest('/api/v1/roles.removeUserFromRole', [
-            'roleName' => $name,
+            'roleName' => $roleName,
             'username' => $username,
         ]);
 
